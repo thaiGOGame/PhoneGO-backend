@@ -12,18 +12,17 @@ import lombok.*;
 @Table(name = "comment")@NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @ManyToOne
+	@Id
+	@ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+	@Id
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+	@Id
     private LocalDateTime createdTime;
 
     @Lob

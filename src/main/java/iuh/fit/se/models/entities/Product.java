@@ -45,8 +45,6 @@ public class Product {
 	protected BigDecimal salePrice;
 	@Column(name = "purchase_price", columnDefinition = "Decimal(19,0)")
 	protected BigDecimal purchasePrice;
-	@Transient
-    protected BigDecimal discountedPrice = BigDecimal.ZERO;
 	@PrePersist
 	protected void onCreate() {
 		quantity = 0;

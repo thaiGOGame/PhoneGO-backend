@@ -25,6 +25,8 @@ public class Cart {
 	private Set<CartDetail> cartDetails;
 
 	private LocalDateTime createdTime;
+	
+	private LocalDateTime modifiedTime;
 
 	@Enumerated(EnumType.STRING)
 	private State state;

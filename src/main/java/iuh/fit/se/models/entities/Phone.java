@@ -19,6 +19,7 @@ public class Phone extends Product {
     private RAM ram;
 	@Enumerated(EnumType.STRING)
     private ROM rom;
+    @Column(columnDefinition = "varchar(50)")
     private String chip;
     @Column(name = "screen_size", columnDefinition = "Decimal(3,2)")
     private float screenSize;

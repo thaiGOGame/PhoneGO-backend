@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import iuh.fit.se.models.enums.Gender;
 import iuh.fit.se.models.enums.Role;
 import iuh.fit.se.models.enums.State;
+import iuh.fit.se.models.enums.UserState;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,13 +33,19 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-	@Column(columnDefinition = "nvarchar(100)")
+    @Lob
     private String url;
 	@Column(columnDefinition = "Decimal(19,0)")
     private BigDecimal coin;
+
+	private LocalDateTime createdTime;
+	
+	@Enumerated(EnumType.STRING)
+	private UserState userState;
 	
 	@PrePersist
 	protected void onCreate() {
 		coin = BigDecimal.ZERO;
+		createdTime = LocalDateTime.now();
 	}
 }

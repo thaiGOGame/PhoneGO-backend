@@ -3,7 +3,7 @@ package iuh.fit.se.models.enums;
 public enum Role {
     ADMIN("Admin"), 
     CUSTOMER("Customer"), 
-    SELLER("Seller");
+    GUEST("Guest");
 
     private final String displayName;
 

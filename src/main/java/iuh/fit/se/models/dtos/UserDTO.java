@@ -1,4 +1,4 @@
-package iuh.fit.se.models.entities;
+package iuh.fit.se.models.dtos;
 
 import java.math.BigDecimal;
 
