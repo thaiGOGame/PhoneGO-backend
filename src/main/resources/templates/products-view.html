@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Discounted Products</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+		.product-card {
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			padding: 15px;
+			margin: 10px;
+			text-align: center;
+		}
+
+		.original-price {
+			text-decoration: line-through;
+			color: red;
+		}
+
+		.discounted-price {
+			font-size: 1.5em;
+			color: green;
+		}
+
+		.pagination {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="my-4">Discounted Products</h1>
+
+		<!-- Search Form -->
+		<form action="#" th:action="@{/products}" method="get" class="mb-4">
+			<div class="input-group">
+				<input type="text" name="searchTerm" class="form-control" placeholder="Search products..."
+					th:value="${searchTerm}" />
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="submit">Search</button>
+				</div>
+			</div>
+		</form>
+
+		<!-- Phones Section -->
+		<h2>Phones</h2>
+		<div class="row">
+			<div class="col-md-4" th:each="productDTO : ${discountedPhones}">
+				<div class="product-card">
+					<h5 th:text="${productDTO.product.name}">Product Name</h5>
+					<p class="original-price" th:text="${productDTO.product.salePrice} + ' VND'">Original Price</p>
+					<p class="discounted-price" th:text="${productDTO.discountedPrice} + ' VND'">Discounted Price</p>
+				</div>
+			</div>
+		</div>
+		<div class="pagination">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:if="${pageNumberPhones != null && pageNumberPhones > 0}">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${pageNumberPhones - 1}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}">Previous</a>
+				</li>
+				<li class="page-item" th:each="i : ${pageNumbersPhones}">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${i}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}"
+						th:text="${i + 1}">1</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${pageNumberPhones + 1}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}">Next</a>
+				</li>
+			</ul>
+		</div>
+		<!-- Charging Cables Section -->
+		<h2>Charging Cables</h2>
+		<div class="row">
+			<div class="col-md-4" th:each="productDTO : ${discountedChargingCables}">
+				<div class="product-card">
+					<h5 th:text="${productDTO.product.name}">Product Name</h5>
+					<p class="original-price" th:text="${productDTO.product.salePrice} + ' VND'">Original Price</p>
+					<p class="discounted-price" th:text="${productDTO.discountedPrice} + ' VND'">Discounted Price</p>
+				</div>
+			</div>
+		</div>
+		<div class="pagination">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:if="${pageNumberPhones != null && pageNumberPhones > 0}">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${pageNumberPhones - 1}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}">Previous</a>
+				</li>
+				<li class="page-item" th:each="i : ${pageNumbersPhones}">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${i}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}"
+						th:text="${i + 1}">1</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${pageNumberPhones + 1}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}">Next</a>
+				</li>
+			</ul>
+		</div>
+		<!-- Charging Cables Section -->
+		<h2>Power Banks</h2>
+		<div class="row">
+			<div class="col-md-4" th:each="productDTO : ${discountedPowerBanks}">
+				<div class="product-card">
+					<h5 th:text="${productDTO.product.name}">Product Name</h5>
+					<p class="original-price" th:text="${productDTO.product.salePrice} + ' VND'">Original Price</p>
+					<p class="discounted-price" th:text="${productDTO.discountedPrice} + ' VND'">Discounted Price</p>
+				</div>
+			</div>
+		</div>
+		<div class="pagination">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:if="${pageNumberPhones != null && pageNumberPhones > 0}">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${pageNumberPhones - 1}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}">Previous</a>
+				</li>
+				<li class="page-item" th:each="i : ${pageNumbersPhones}">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${i}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}"
+						th:text="${i + 1}">1</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link"
+						th:href="@{/products(pageNumberPhones=${pageNumberPhones + 1}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}">Next</a>
+				</li>
+			</ul>
+		</div>
+		<h2>Earphones</h2>
+				<div class="row">
+					<div class="col-md-4" th:each="productDTO : ${discountedEarphones}">
+						<div class="product-card">
+							<h5 th:text="${productDTO.product.name}">Product Name</h5>
+							<p class="original-price" th:text="${productDTO.product.salePrice} + ' VND'">Original Price</p>
+							<p class="discounted-price" th:text="${productDTO.discountedPrice} + ' VND'">Discounted Price</p>
+						</div>
+					</div>
+				</div>
+				<div class="pagination">
+					<ul class="pagination justify-content-center">
+						<li class="page-item" th:if="${pageNumberPhones != null && pageNumberPhones > 0}">
+							<a class="page-link"
+								th:href="@{/products(pageNumberPhones=${pageNumberPhones - 1}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}">Previous</a>
+						</li>
+						<li class="page-item" th:each="i : ${pageNumbersPhones}">
+							<a class="page-link"
+								th:href="@{/products(pageNumberPhones=${i}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}"
+								th:text="${i + 1}">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link"
+								th:href="@{/products(pageNumberPhones=${pageNumberPhones + 1}, pageSize=${pageSize}, sortField=${sortField}, sortOrder=${sortOrder}, searchTerm=${searchTerm})}">Next</a>
+						</li>
+					</ul>
+				</div>
+	</div>
+</body>
+
+</html>
