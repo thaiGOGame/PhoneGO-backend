@@ -7,7 +7,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP DATABASE IF EXISTS `phonego`;
 CREATE DATABASE IF NOT EXISTS `phonego` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `phonego`;
 
@@ -29,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
   `total_due` decimal(19,0) DEFAULT NULL,
   `used_coin` decimal(19,0) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `modified_time` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKg5uhi8vpsuy0lgloxk2h4w5o6` (`user_id`),
   CONSTRAINT `FKg5uhi8vpsuy0lgloxk2h4w5o6` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
@@ -77,12 +77,13 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `rate` tinyint(4) DEFAULT NULL,
   `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `created_time` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKm1rmnfcvq5mk26li4lit88pc5` (`product_id`),
   KEY `FKqm52p1v3o13hy268he0wcngr5` (`user_id`),
   CONSTRAINT `FKm1rmnfcvq5mk26li4lit88pc5` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   CONSTRAINT `FKqm52p1v3o13hy268he0wcngr5` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `discount` (
@@ -220,21 +221,24 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_uca1400_ai_ci DEFAULT NULL,
   `phone_number` varchar(15) CHARACTER SET utf8mb3 COLLATE utf8mb3_uca1400_ai_ci DEFAULT NULL,
   `role` enum('ADMIN','CUSTOMER','SELLER') DEFAULT NULL,
-  `url` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_uca1400_ai_ci DEFAULT NULL,
+  `url` longtext DEFAULT NULL,
+  `created_time` datetime(6) DEFAULT NULL,
+  `state` enum('CANCELED','COMPLETED','PENDING') DEFAULT NULL,
+  `user_state` enum('ACTIVE','BANNED','INACTIVE') DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `users` (`id`, `address`, `coin`, `email`, `full_name`, `gender`, `password`, `phone_number`, `role`, `url`) VALUES
-	(1, '123 Main St, New York, NY', 10000, 'alice@example.com', 'Alice Johnson', 'FEMALE', 'password123', '1234567890', 'CUSTOMER', 'http://example.com/alice.jpg'),
-	(2, '456 Elm St, Los Angeles, CA', 25000, 'bob@example.com', 'Bob Smith', 'MALE', 'password456', '0987654321', 'SELLER', 'http://example.com/bob.jpg'),
-	(3, '789 Maple Ave, Chicago, IL', 5000, 'charlie@example.com', 'Charlie Brown', 'OTHER', 'password789', '1231231234', 'CUSTOMER', 'http://example.com/charlie.jpg'),
-	(4, '101 Oak St, Houston, TX', 15000, 'dana@example.com', 'Dana White', 'FEMALE', 'password101', '3213214321', 'ADMIN', 'http://example.com/dana.jpg'),
-	(5, '202 Pine Rd, Miami, FL', 20000, 'edward@example.com', 'Edward Green', 'MALE', 'password202', '9876543210', 'SELLER', 'http://example.com/edward.jpg'),
-	(6, '303 Cedar Ln, Seattle, WA', 35000, 'fiona@example.com', 'Fiona Black', 'FEMALE', 'password303', '6543210987', 'CUSTOMER', 'http://example.com/fiona.jpg'),
-	(7, '404 Birch Blvd, San Francisco, CA', 18000, 'george@example.com', 'George White', 'MALE', 'password404', '4567890123', 'CUSTOMER', 'http://example.com/george.jpg'),
-	(8, '505 Spruce Dr, Denver, CO', 12000, 'helen@example.com', 'Helen Brown', 'FEMALE', 'password505', '7890123456', 'SELLER', 'http://example.com/helen.jpg'),
-	(9, '606 Willow Ct, Dallas, TX', 30000, 'ian@example.com', 'Ian Gray', 'MALE', 'password606', '1230984567', 'ADMIN', 'http://example.com/ian.jpg'),
-	(10, '707 Poplar St, Boston, MA', 22000, 'julia@example.com', 'Julia Green', 'FEMALE', 'password707', '9871236540', 'CUSTOMER', 'http://example.com/julia.jpg');
+INSERT INTO `users` (`id`, `address`, `coin`, `email`, `full_name`, `gender`, `password`, `phone_number`, `role`, `url`, `created_time`, `state`, `user_state`) VALUES
+	(1, '123 Main St, New York, NY', 10000, 'alice@example.com', 'Alice Johnson', 'FEMALE', 'password123', '1234567890', 'CUSTOMER', 'http://example.com/alice.jpg', NULL, NULL, NULL),
+	(2, '456 Elm St, Los Angeles, CA', 25000, 'bob@example.com', 'Bob Smith', 'MALE', 'password456', '0987654321', 'SELLER', 'http://example.com/bob.jpg', NULL, NULL, NULL),
+	(3, '789 Maple Ave, Chicago, IL', 5000, 'charlie@example.com', 'Charlie Brown', 'OTHER', 'password789', '1231231234', 'CUSTOMER', 'http://example.com/charlie.jpg', NULL, NULL, NULL),
+	(4, '101 Oak St, Houston, TX', 15000, 'dana@example.com', 'Dana White', 'FEMALE', 'password101', '3213214321', 'ADMIN', 'http://example.com/dana.jpg', NULL, NULL, NULL),
+	(5, '202 Pine Rd, Miami, FL', 20000, 'edward@example.com', 'Edward Green', 'MALE', 'password202', '9876543210', 'SELLER', 'http://example.com/edward.jpg', NULL, NULL, NULL),
+	(6, '303 Cedar Ln, Seattle, WA', 35000, 'fiona@example.com', 'Fiona Black', 'FEMALE', 'password303', '6543210987', 'CUSTOMER', 'http://example.com/fiona.jpg', NULL, NULL, NULL),
+	(7, '404 Birch Blvd, San Francisco, CA', 18000, 'george@example.com', 'George White', 'MALE', 'password404', '4567890123', 'CUSTOMER', 'http://example.com/george.jpg', NULL, NULL, NULL),
+	(8, '505 Spruce Dr, Denver, CO', 12000, 'helen@example.com', 'Helen Brown', 'FEMALE', 'password505', '7890123456', 'SELLER', 'http://example.com/helen.jpg', NULL, NULL, NULL),
+	(9, '606 Willow Ct, Dallas, TX', 30000, 'ian@example.com', 'Ian Gray', 'MALE', 'password606', '1230984567', 'ADMIN', 'http://example.com/ian.jpg', NULL, NULL, NULL),
+	(10, '707 Poplar St, Boston, MA', 22000, 'julia@example.com', 'Julia Green', 'FEMALE', 'password707', '9871236540', 'CUSTOMER', 'http://example.com/julia.jpg', NULL, NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
